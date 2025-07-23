@@ -1,0 +1,23 @@
+#{extends 'main.html' /}
+
+#{if c}
+	#{set title:'Edição de Comentário' /}
+#{/if}
+#{else}
+	#{set title:'Cadastro de Comentário' /}
+#{/else}
+
+<h1> Notícia </h1>
+<h3>${noticia.titulo}</h3>
+<p>${noticia.conteudo}
+
+<form action="@{Comentarios.salvar}"> 
+		<input type="hidden" name="comentario.noticia.id" value="${noticia?.id}" />
+		
+		<label>Conteúdo</label>
+		<input type="text"name="comentario.conteudo" value="${c?.conteudo}" />
+		
+		<input type="submit" value="${c ? 'Editar':'Cadastrar'}" />
+		 
+</form>
+

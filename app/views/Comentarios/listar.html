@@ -1,0 +1,21 @@
+#{extends 'main.html' /}
+#{set title:'Listagem de Comentários' /}
+
+
+<h1> Notícia </h1>
+<h3>${noticia.titulo}</h3>
+<p>${noticia.conteudo}
+	
+	<ul>
+		#{list items: comentarios, as:'c'}
+			<li>${c.conteudo} - (${c.curtidas}) </br>
+				<a href="@{Comentarios.editar(c.id)}">Editar</a> |
+				<a href="@{Comentarios.remover(c.id)}">Remover</a>
+			</li>
+		#{/list}
+		#{else}
+			<li>Seja o primeiro a comentar!</li>
+		#{/else}
+	</ul>
+
+	<a class="btn btn-primary" href="@{Comentarios.form(noticia.id)}">Cadastrar Novo</a>
