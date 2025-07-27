@@ -9,10 +9,6 @@ import models.Status;
 import play.mvc.Controller;
 
 public class Comentarios extends Controller {
-
-	public static void listarNoticias() {
-		render();
-	}
 	
 	public static void form(Long noticiaId) {
 		Noticia noticia = Noticia.findById(noticiaId);

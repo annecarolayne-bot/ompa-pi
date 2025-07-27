@@ -1,0 +1,17 @@
+#{extends 'main.html' /}
+#{set title:'Últimas Notícias' /}
+
+
+<h1>Últimas Notícias</h1>
+
+#{list items: noticias, as:'n'}
+  <div class="noticia">
+	<h3> <a href="@{Comentarios.form(n.id)}">${n.titulo}</a> </h3> 
+	<p> <a href="@{Noticias.remover(n.id)}">Remover</a> | <a href="@{Noticias.editar(n.id)}">Editar</a> </p>
+	<p> ${n.conteudo}</p>
+
+</div>
+#{/list}
+
+
+

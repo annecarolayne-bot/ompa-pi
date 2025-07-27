@@ -25,7 +25,7 @@ public class Comentario extends Model{
 	
 
 	public Comentario(String conteudo, Integer curtidas, Noticia noticia) {
-		
+		this.status = Status.ATIVO;
 		this.conteudo = conteudo;
 		this.curtidas = curtidas;
 		this.noticia = noticia;

@@ -1,0 +1,36 @@
+#{extends 'main.html' /}
+
+#{if n}
+	#{set title:'Edição de Notícia' /}
+	<h1>Edição de Notícia</h1>
+#{/if}
+#{else}
+	#{set title:'Cadastro de Notícia' /}
+	<h1>Cadastro de Notícias</h1>
+#{/else}
+
+
+<form action="@{Noticias.salvar}"> 
+		<input type="hidden" name="noticia.id" value="${n?.id}" />
+		
+		<label class="form-label">Autor: </label>
+		<input type="text" class="form-control" name="noticia.autor" value="${n?.autor}"/>
+		
+		</br>
+		
+		<label class="form-label">Título: </label>
+		<input type="text" class="form-control" name="noticia.titulo" value="${n?.titulo}"/>
+		
+		</br>
+		
+		<div class="form-floating">
+		  <textarea class="form-control" name="noticia.conteudo" id="floatingTextarea">${n?.conteudo?.raw()}</textarea>
+		  <label for="floatingTextarea">Conteúdo</label>
+		</div>
+		
+		</br>
+		
+		<input type="submit" class="btn btn-primary" value="${n ? 'Editar':'Cadastrar'}" />
+		 
+</form>
+
