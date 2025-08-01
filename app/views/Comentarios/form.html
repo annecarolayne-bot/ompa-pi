@@ -1,23 +1,67 @@
 #{extends 'main.html' /}
 
-#{if c}
+#{if comentario}
 	#{set title:'Edição de Comentário' /}
 #{/if}
 #{else}
 	#{set title:'Cadastro de Comentário' /}
 #{/else}
 
-<h1> Notícia </h1>
-<h3>${noticia.titulo}</h3>
-<p>${noticia.conteudo}
+<!-- Page Header-->
+       <header class="masthead" style="background-image: url('${noticia.caminhoImagem}')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">
+                            <h1 style="color: rgb(118, 227, 9);">${noticia.titulo}</h1>
+                            <span class="subheading" style="color: rgb(118, 227, 9);">${noticia.conteudo.split('\\s+').take(8).join(' ')}... - ${noticia.dataPublicacao?.format("dd/MM/yyyy")}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      </header>
+<div class="container">
 
-<form action="@{Comentarios.salvar}"> 
+<p>${noticia.conteudo}
+	
+	#{if flash.success}
+	    <div class="alert alert-success">
+	        ${flash.success}
+	    </div>
+	#{/if}
+
+	#{if flash.error}
+	    <div class="alert alert-danger">
+	        ${flash.error}
+	    </div>
+	#{/if}
+	
+	#{if comentario}
+	<h3>Edição de Comentário</h3>
+	#{/if}
+	#{else}
+	<h3>Cadastro de Comentário</h3>
+	#{/else}
+	
+
+<form action="@{Comentarios.salvar}" method="POST"> 
+	    <input type="hidden" name="comentario.id" value="${comentario?.id}" />
 		<input type="hidden" name="comentario.noticia.id" value="${noticia?.id}" />
 		
-		<label>Conteúdo</label>
-		<input type="text"name="comentario.conteudo" value="${c?.conteudo}" />
+		<label class="form-label">Autor: </label>
+		<input type="text" class="form-control" name="comentario.autor" value="${comentario?.autor}"/>
 		
-		<input type="submit" value="${c ? 'Editar':'Cadastrar'}" />
+		#{ifnot comentario} 
+		<label class="form-label">Senha: </label>
+		<input type="password" class="form-control" name="comentario.senha"/>
+		#{/ifnot}
+		</br>
+							
+		<label class="form-label">Conteúdo: </label>
+		<input type="text"name="comentario.conteudo" value="${comentario?.conteudo}" />
+		
+		<input type="submit" value="${comentario ? 'Editar':'Cadastrar'}" />
 		 
 </form>
-
+<div class="container">
+</br>

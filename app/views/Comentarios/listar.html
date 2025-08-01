@@ -2,16 +2,55 @@
 #{set title:'Listagem de Comentários' /}
 
 
-<h1> Notícia </h1>
-<h3>${noticia.titulo}</h3>
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('${noticia.caminhoImagem}')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">
+                            <h1>${noticia.titulo}</h1>
+                            <span class="subheading" >${noticia.conteudo.split('\\s+').take(8).join(' ')}... - ${noticia.dataPublicacao?.format("dd/MM/yyyy")}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      </header>
+
+<div class="container">   
+
 <p>${noticia.conteudo}
+	
+	#{if flash.success}
+	    <div class="alert alert-success">
+	        ${flash.success}
+	    </div>
+	#{/if}
+
+	#{if flash.error}
+	    <div class="alert alert-danger">
+	        ${flash.error}
+	    </div>
+	#{/if}
 	
 	<ul>
 		#{list items: comentarios, as:'c'}
-			<li>${c.conteudo} - (${c.curtidas}) </br>
+			<li>${c.autor} - ${c.data?.format("dd/MM/yyyy")} -  ${c.conteudo} - (${c.curtidas}) </br>
 				<a href="@{Comentarios.editar(c.id)}">Editar</a> |
-				<a href="@{Comentarios.remover(c.id)}">Remover</a>
+				<a href="javascript:void(0);" onclick="mostrarFormularioRemover(${c.id})">Remover</a>
+				<div id="form-remover-${c.id}" style="display:none; margin-top: 5px;">
+				    <form action="@{Comentarios.remover(c.id)}" method="post" style="display:inline;">
+				        <input type="password" name="senha" placeholder="Senha" required />
+				        <button type="submit">Confirmar</button>
+				    </form>
+				</div>
 			</li>
+			<form action="@{Comentarios.curtir(c.id)}" method="post" style="display:inline;">
+			        <button type="submit">👍 Curtir </button>
+			    </form>
+
+			    <form action="@{Comentarios.descurtir(c.id)}" method="post" style="display:inline;">
+			        <button type="submit">👎 Descurtir </button>
+			    </form>
 		#{/list}
 		#{else}
 			<li>Seja o primeiro a comentar!</li>
@@ -19,3 +58,13 @@
 	</ul>
 
 	<a class="btn btn-primary" href="@{Comentarios.form(noticia.id)}">Cadastrar Novo</a>
+
+	</div>
+	</br>
+
+	<script>
+	function mostrarFormularioRemover(id) {
+	    var formDiv = document.getElementById("form-remover-" + id);
+	    formDiv.style.display = (formDiv.style.display === "none") ? "block" : "none";
+	}
+	</script>

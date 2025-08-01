@@ -2,35 +2,78 @@
 
 #{if n}
 	#{set title:'Edição de Notícia' /}
-	<h1>Edição de Notícia</h1>
 #{/if}
 #{else}
 	#{set title:'Cadastro de Notícia' /}
-	<h1>Cadastro de Notícias</h1>
 #{/else}
 
+<!-- Page Header-->
+       <header class="masthead" style="background-image: url(@{'/public/startbootstrap-clean-blog-gh-pages/assets/img/home-bg.jpg'})">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">
+							#{if n}
+                                <h1 style="color: rgb(118, 227, 9);">Edição de Notícia</h1>
+							#{/if}
+							#{else}
+							<h1 style="color: rgb(118, 227, 9);">Cadastro de Notícia</h1>
+							#{/else}
+                            <span class="subheading" style="color: rgb(118, 227, 9);">Fique por dentro do universo olímpico da matemática!</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      </header>
 
-<form action="@{Noticias.salvar}"> 
+<div class="container">
+
+<form action="@{Noticias.salvar}" method="post" enctype="multipart/form-data"> 
 		<input type="hidden" name="noticia.id" value="${n?.id}" />
 		
 		<label class="form-label">Autor: </label>
-		<input type="text" class="form-control" name="noticia.autor" value="${n?.autor}"/>
+		<input type="text" class="form-control" name="noticia.autor" value="${n?.autor}" required/>
 		
 		</br>
+		
+	
 		
 		<label class="form-label">Título: </label>
-		<input type="text" class="form-control" name="noticia.titulo" value="${n?.titulo}"/>
+		<input type="text" class="form-control" name="noticia.titulo" value="${n?.titulo}" required/>
 		
 		</br>
 		
+		
+		<div class="mb-3">
+				<label class="form-label">Assunto:</label>
+				<select class="form-select" name="noticia.assunto.id">
+					#{list items:assuntos, as:'a'}
+						<option value="${a.id}" 
+							${a.id == n?.assunto?.id ? 'selected' : ''}>
+								${a.titulo}
+						</option>
+					#{/list}
+				</select>
+			</div>
+			
+			<label class="form-label">Imagem de capa:</label>
+			   <input type="file" class="form-control" name="imagemCapa" accept="image/*" class="form-control" value="${n?.caminhoImagem}">
+			
+			   </br>   
+			   
 		<div class="form-floating">
-		  <textarea class="form-control" name="noticia.conteudo" id="floatingTextarea">${n?.conteudo?.raw()}</textarea>
+		
+		  <textarea class="form-control" name="noticia.conteudo" id="floatingTextarea" required>${n?.conteudo?.raw()}</textarea>
 		  <label for="floatingTextarea">Conteúdo</label>
-		</div>
+	  </div>
 		
 		</br>
 		
 		<input type="submit" class="btn btn-primary" value="${n ? 'Editar':'Cadastrar'}" />
+
 		 
 </form>
+
+</div>
+</br>
 

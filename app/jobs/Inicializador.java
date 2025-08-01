@@ -1,5 +1,8 @@
 package jobs;
 
+import java.util.Date;
+
+import models.Assunto;
 import models.Comentario;
 import models.Noticia;
 import play.jobs.Job;
@@ -12,13 +15,21 @@ public class Inicializador extends Job{
 	public void doJob() throws Exception{
 		if(Noticia.count()==0) {
 		Noticia n1 = new Noticia("Nova Olimpíada de Matemática", "Assunto interessante", "Maria");
+		n1.dataPublicacao = new Date();
 		n1.save();
 		
 		Noticia n2 = new Noticia("Oficina de Dobraduras", "Conteúdo", "José");
+		n2.dataPublicacao = new Date();
 		n2.save();
 		
-		Comentario c1 = new Comentario("Muito legal, recomendo!", 120, n1);
+		Comentario c1 = new Comentario("Muito legal, recomendo!","José", 120,0, n1);
 		c1.save();
+		
+		Assunto a1 = new Assunto("Tecnologia","Bla bla bla");
+		a1.save();
+		
+		Assunto a2 = new Assunto("Palestra","Esse assunto busca informar sobre palestras no laboratório de matemática");
+		a2.save();
 		}	
 	}
 	

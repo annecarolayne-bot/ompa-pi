@@ -1,17 +1,69 @@
 #{extends 'main.html' /}
 #{set title:'Últimas Notícias' /}
 
+<!-- Page Header-->
 
-<h1>Últimas Notícias</h1>
+       <header class="masthead" style="background-image: url(@{'/public/startbootstrap-clean-blog-gh-pages/assets/img/home-bg.jpg'})">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">
+							<h1><a href="@{Noticias.listar}" id="logo">
+							<img src="@{'/public/images/logo-ompa.png'}" alt="Logo OMPA" height="180px" />
+							</a></h1>
+                        
+                            <span class="subheading" style="color: rgb(118, 227, 9);">Fique por dentro do universo olímpico da matemática!</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      </header>
 
-#{list items: noticias, as:'n'}
-  <div class="noticia">
-	<h3> <a href="@{Comentarios.form(n.id)}">${n.titulo}</a> </h3> 
-	<p> <a href="@{Noticias.remover(n.id)}">Remover</a> | <a href="@{Noticias.editar(n.id)}">Editar</a> </p>
-	<p> ${n.conteudo}</p>
+	  <div class="container px-4 px-lg-5">
+	              <div class="row gx-4 gx-lg-5 justify-content-center">
+	                  <div class="col-md-10 col-lg-8 col-xl-7">
+						#{if noticias.isEmpty()}
+						    <p>Nenhuma notícia encontrada para "${termo}".</p>
+						#{/if}
+	                      <!-- Post preview-->
+						  #{list items: noticias, as:'n'}
+	                      <div class="post-preview">
+							
+							<!-- Botão de três pontinhos -->
+													  <div class="dropdown">
+													    <button class="btn btn-light" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+													      &#8942; <!-- Código para os três pontinhos verticais (⋮) -->
+													    </button>
 
-</div>
-#{/list}
+													    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton" style="min-width: 250px;">
+													      <li><a class="dropdown-item" href="@{Noticias.editar(n.id)}">Editar</a></li>
+													      <li><a class="dropdown-item text-danger" href="@{Noticias.remover(n.id)}">Excluir</a></li>
+													      
+													    </ul>
+													  </div>
+	                          <a href="@{Comentarios.form(n.id)}" style="color:#6a0dad">
+	                              <h2 class="post-title">${n.titulo}</h2>
+	                              <h3 class="post-subtitle">${n.conteudo.split('\\s+').take(8).join(' ')}...</h3>
+	                          </a>
+							
+	                          <p class="post-meta">
+	                              Publicado por 
+	                              <a href="#">${n.autor}</a>
+	                              em ${n.dataPublicacao}
+	                          </p>
+	                      </div>
+	                      <!-- Divider-->
+	                      <hr class="my-4" />
+						  #{/list}
+						  <!-- Pager-->
+						    <div class="d-flex justify-content-end mb-4"><a class="btn btn-outline-success text-uppercase" href="@{Noticias.form}">Cadastrar Nova Notícia →</a></div>
+						  </div>
+						 </div>
+						 </div>
+						 
+	  
+	  
+
 
 
 
