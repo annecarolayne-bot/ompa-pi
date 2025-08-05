@@ -22,7 +22,10 @@ public class Comentarios extends Controller {
 		Noticia noticia = Noticia.findById(noticiaId);
 		List<Comentario> comentarios = Comentario.find("noticia.id = ?1 AND status = ?2", noticiaId, Status.ATIVO)
 				.fetch();
-		render(comentarios, noticia);
+		
+		 int totalComentarios = comentarios.size();
+		
+		render(comentarios, noticia, totalComentarios);
 	}
 
 	public static void salvar(Comentario comentario) {
@@ -41,22 +44,11 @@ public class Comentarios extends Controller {
 
 	public static void remover(Long id) {
 		Comentario comentario = Comentario.findById(id);
-		String senhaDigitada = params.get("senha");
-
-		System.out.println("Senha digitada : " + senhaDigitada);
-		System.out.println("Senha criptografada esperada: " + comentario.senha);
-
-		if (senhaDigitada == null || !comentario.senha.equals(CriptografiaUtils.criptografarMD5(senhaDigitada))) {
-			flash.error("Senha incorreta. Comentário não removido.");
-			System.out.println("estou dentro do if");
-			listar(comentario.noticia.id);
-			return;
-		}
 
 		comentario.status = Status.INATIVO;
 		comentario.save();
 		flash.success("Comentário removido com sucesso.");
-		System.out.println("Deu certo");
+		
 		listar(comentario.noticia.id);
 	}
 
@@ -66,6 +58,35 @@ public class Comentarios extends Controller {
 		Noticia noticia = comentario.noticia;
 		renderTemplate("Comentarios/form.html", comentario, noticia);
 	}
+
+	public static void curtir(Long id) {
+	    Comentario c = Comentario.findById(id);
+	    if (c != null) {
+	    	if (c.curtidas == null) {
+	    	    c.curtidas = 0;
+	    	}
+	       c.curtidas = c.curtidas+1;
+	       c.save(); // ou update()
+	    }
+
+	    Long noticiaId = Long.valueOf(params.get("noticiaId"));
+	    listar(noticiaId);
+	}
+
+	public static void descurtir(Long id) {
+	    Comentario c = Comentario.findById(id);
+	    if (c != null) {
+	    	if (c.descurtidas == null) {
+	    	    c.descurtidas = 0;
+	    	}
+	        c.descurtidas = c.descurtidas+1;
+	        c.save(); // ou update()
+	    }
+
+	    Long noticiaId = Long.valueOf(params.get("noticiaId"));
+	    listar(noticiaId);
+	}
+	
 
 	
 }

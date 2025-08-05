@@ -41,9 +41,9 @@
 													      
 													    </ul>
 													  </div>
-	                          <a href="@{Comentarios.form(n.id)}" style="color:#6a0dad">
+	                          <a href="@{Comentarios.listar(n.id)}" style="color:#6a0dad">
 	                              <h2 class="post-title">${n.titulo}</h2>
-	                              <h3 class="post-subtitle">${n.conteudo.split('\\s+').take(8).join(' ')}...</h3>
+	                              <h3 class="post-subtitle">${n.conteudo.length() > 80 ? n.conteudo.substring(0, 80) + "..." : n.conteudo}</h3>
 	                          </a>
 							
 	                          <p class="post-meta">

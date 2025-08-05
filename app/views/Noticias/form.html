@@ -31,12 +31,16 @@
 <form action="@{Noticias.salvar}" method="post" enctype="multipart/form-data"> 
 		<input type="hidden" name="noticia.id" value="${n?.id}" />
 		
-		<label class="form-label">Autor: </label>
+		<label class="form-label" >Autor: </label>
 		<input type="text" class="form-control" name="noticia.autor" value="${n?.autor}" required/>
 		
-		</br>
 		
-	
+		#{ifnot n} 
+		</br>
+				<label class="form-label">Senha: </label>
+				<input type="password" class="form-control" name="noticia.senha"/>
+				#{/ifnot}
+				</br>
 		
 		<label class="form-label">Título: </label>
 		<input type="text" class="form-control" name="noticia.titulo" value="${n?.titulo}" required/>
@@ -54,15 +58,13 @@
 						</option>
 					#{/list}
 				</select>
-			</div>
+		</div>
 			
-			<label class="form-label">Imagem de capa:</label>
-			   <input type="file" class="form-control" name="imagemCapa" accept="image/*" class="form-control" value="${n?.caminhoImagem}">
-			
-			   </br>   
+		<label class="form-label">Imagem de capa:</label>
+		<input type="file" class="form-control" name="imagemCapa" accept="image/*"  required/>
+		</br>   
 			   
 		<div class="form-floating">
-		
 		  <textarea class="form-control" name="noticia.conteudo" id="floatingTextarea" required>${n?.conteudo?.raw()}</textarea>
 		  <label for="floatingTextarea">Conteúdo</label>
 	  </div>

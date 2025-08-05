@@ -25,11 +25,18 @@ public class Inicializador extends Job{
 		Comentario c1 = new Comentario("Muito legal, recomendo!","José", 120,0, n1);
 		c1.save();
 		
-		Assunto a1 = new Assunto("Tecnologia","Bla bla bla");
+		Assunto a1 = new Assunto("Tecnologia","tecnologia");
 		a1.save();
 		
-		Assunto a2 = new Assunto("Palestra","Esse assunto busca informar sobre palestras no laboratório de matemática");
+		Assunto a2 = new Assunto("Saúde","saude");
 		a2.save();
+		
+		Assunto a3 = new Assunto("Educação","educacao");
+		a3.save();
+		
+		Assunto a4 = new Assunto("Cultura","cultura");
+		a4.save();
+		
 		}	
 	}
 	

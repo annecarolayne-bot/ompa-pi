@@ -7,9 +7,9 @@
             <div class="container position-relative px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
-                        <div class="site-heading">
-                            <h1>${noticia.titulo}</h1>
-                            <span class="subheading" >${noticia.conteudo.split('\\s+').take(8).join(' ')}... - ${noticia.dataPublicacao?.format("dd/MM/yyyy")}</span>
+                        <div class="site-heading" style="color:rgb(118, 227, 9)">
+                            <h1 >${noticia.titulo}</h1>
+                            <span class="subheading" >${noticia.conteudo.length() > 80 ? noticia.conteudo.substring(0, 80) + "..." : noticia.conteudo} - ${noticia.dataPublicacao?.format("dd/MM/yyyy")}</span>
                         </div>
                     </div>
                 </div>
@@ -18,53 +18,75 @@
 
 <div class="container">   
 
-<p>${noticia.conteudo}
+<p style="text-align: justify; ">${noticia.conteudo} </p>
 	
 	#{if flash.success}
-	    <div class="alert alert-success">
+	    <div class="alert alert-success alert-dismissible fade show" role="alert">
 	        ${flash.success}
 	    </div>
 	#{/if}
 
 	#{if flash.error}
-	    <div class="alert alert-danger">
+	    <div class="alert alert-danger alert-dismissible fade show" role="alert">
 	        ${flash.error}
 	    </div>
 	#{/if}
 	
-	<ul>
+	<h3 style="color:#6a0dad"> ${totalComentarios} comentários</h3>
+	</br>
+	
+	
+	<ul style="list-style-type: none;">
+		
 		#{list items: comentarios, as:'c'}
-			<li>${c.autor} - ${c.data?.format("dd/MM/yyyy")} -  ${c.conteudo} - (${c.curtidas}) </br>
-				<a href="@{Comentarios.editar(c.id)}">Editar</a> |
-				<a href="javascript:void(0);" onclick="mostrarFormularioRemover(${c.id})">Remover</a>
-				<div id="form-remover-${c.id}" style="display:none; margin-top: 5px;">
-				    <form action="@{Comentarios.remover(c.id)}" method="post" style="display:inline;">
-				        <input type="password" name="senha" placeholder="Senha" required />
-				        <button type="submit">Confirmar</button>
-				    </form>
-				</div>
-			</li>
-			<form action="@{Comentarios.curtir(c.id)}" method="post" style="display:inline;">
-			        <button type="submit">👍 Curtir </button>
-			    </form>
+		<li>
+		<div class="comentario"> 
+		<div class="d-flex mb-4 pb-3 border-bottom">
+		    <!-- Ícone do usuário -->
+		    <div class="me-3">
+		        <img src="@{'/public/images/profile-user.png'}" alt="Usuário" class="rounded-circle" width="48" height="48">
+		    </div>
+			<!-- Conteúdo do comentário -->
+			    <div class="flex-grow-1">
+			        <!-- Nome e data -->
+			        <div class="fw-bold">${c.autor} 
+			            <span class="text-muted small">– ${c.data?.format("dd/MM/yyyy")}</span>
+			        </div>
+			
+					<!-- Texto do comentário -->
+					        <div class="mt-1 mb-2">${c.conteudo}</div>
+							
+							<!-- Botões -->
+							       <div class="d-flex align-items-center gap-3">
+							           <!-- Curtir -->
+									   <form action="@{Comentarios.curtir(c.id)}" method="post" class="d-inline" style="display:inline;">
+									   			    <input type="hidden" name="noticiaId" value="${noticia.id}" />
+									   			    <button type="submit" class="btn btn-outline-secondary btn-sm" style="border:none; background-color:white; color:#6a0dad">👍 <span>${c.curtidas}</span> </button>
+									   			</form>
 
-			    <form action="@{Comentarios.descurtir(c.id)}" method="post" style="display:inline;">
-			        <button type="submit">👎 Descurtir </button>
-			    </form>
+							           <!-- Descurtir -->
+									   <form action="@{Comentarios.descurtir(c.id)}" method="post" class="d-inline" style="display:inline;">
+									   			    <input type="hidden" name="noticiaId" value="${noticia.id}" />
+									   			    <button type="submit" class="btn btn-outline-secondary btn-sm" style="border:none; background-color:white; color:#6a0dad">👎 <span>${c.descurtidas}</span> </button>
+									   			</form>
+												
+												
+					
+			
+				<a href="@{Comentarios.editar(c.id)}" class="btn btn-link btn-sm text-decoration-none">✏️ Editar</a> |
+				<a href="@{Comentarios.remover(c.id)}" class="btn btn-link btn-sm text-danger text-decoration-none">🗑 Remover</a>
+			
+			</div>
+</li>
+			
 		#{/list}
 		#{else}
 			<li>Seja o primeiro a comentar!</li>
 		#{/else}
 	</ul>
 
-	<a class="btn btn-primary" href="@{Comentarios.form(noticia.id)}">Cadastrar Novo</a>
+	<a class="btn btn-light" href="@{Comentarios.form(noticia.id)}">Comentar</a>
 
 	</div>
 	</br>
 
-	<script>
-	function mostrarFormularioRemover(id) {
-	    var formDiv = document.getElementById("form-remover-" + id);
-	    formDiv.style.display = (formDiv.style.display === "none") ? "block" : "none";
-	}
-	</script>

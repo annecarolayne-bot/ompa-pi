@@ -23,11 +23,11 @@ public class Comentario extends Model{
 	@Temporal(TemporalType.DATE)
 	public Date data;
 	
-	@ManyToOne
-	public Noticia noticia;
-	
 	@Enumerated(EnumType.STRING)
 	public Status status;
+	
+	@ManyToOne
+	public Noticia noticia;
 	
 	public Comentario() {
 		this.status = Status.ATIVO;

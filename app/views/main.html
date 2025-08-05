@@ -32,14 +32,14 @@
 		               <div class="collapse navbar-collapse" id="navbarResponsive">
 						<form class="d-flex mx-auto" role="search" action="@{Noticias.listar()}" style="max-width: 600px; width: 100%;">
 							<input class="form-control me-2" type="search" name="termo" 
-								placeholder="Buscar notícias por autor, assunto ou título" 
+								placeholder="Buscar notícias por autor ou título" 
 								value="${termo}">
 							<button class="btn btn-outline-light" type="submit"  style="color: rgb(118, 227, 9);">Buscar</button>
 							</form>
 		                   <ul class="navbar-nav ms-auto py-4 py-lg-0" >
-		                       <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="#"  style="color: rgb(118, 227, 9);">Início</a></li>
+		                       <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="@{Noticias.listar}"  style="color: rgb(118, 227, 9);">Início</a></li>
 		                       <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="#"  style="color: rgb(118, 227, 9);">Premiados</a></li>
-		                       <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="#"  style="color: rgb(118, 227, 9);">Calendário Olímpico</a></li>
+		                       <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="#"  style="color: rgb(118, 227, 9);">Calendário</a></li>
 		                       <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="#"  style="color: rgb(118, 227, 9);">Sobre</a></li>
 		                   </ul>
 				       </div>   
@@ -50,6 +50,7 @@
 			  
 		        	#{doLayout /}
 					
+					
 				
 		
 					<!-- Footer-->
@@ -59,23 +60,23 @@
 					                    <div class="col-md-10 col-lg-8 col-xl-7">
 					                        <ul class="list-inline text-center">
 					                            <li class="list-inline-item">
-					                                <a href="#!">
+					                                <a href="https://youtube.com/@professorfranciscoquaranta?si=KCmiIs6e2-MAX2d8" target="_blank">
 					                                    <span class="fa-stack fa-lg">
 					                                        <i class="fas fa-circle fa-stack-2x"></i>
-					                                        <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+					                                        <i class="fab fa-youtube fa-stack-1x fa-inverse"></i>
 					                                    </span>
 					                                </a>
 					                            </li>
 					                            <li class="list-inline-item">
-					                                <a href="#!">
+					                                <a href="https://www.instagram.com/ompajc?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">
 					                                    <span class="fa-stack fa-lg">
 					                                        <i class="fas fa-circle fa-stack-2x"></i>
-					                                        <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
+					                                        <i class="fab fa-instagram fa-stack-1x fa-inverse"></i>
 					                                    </span>
 					                                </a>
 					                            </li>
 					                            <li class="list-inline-item">
-					                                <a href="#!">
+					                                <a href="https://github.com/annecarolayne-bot/ompa-pi.git" target="_blank">
 					                                    <span class="fa-stack fa-lg">
 					                                        <i class="fas fa-circle fa-stack-2x"></i>
 					                                        <i class="fab fa-github fa-stack-1x fa-inverse"></i>
@@ -83,7 +84,7 @@
 					                                </a>
 					                            </li>
 					                        </ul>
-					                        <div class="small text-center text-muted fst-italic">Copyright &copy; Your Website 2023</div>
+					                        <div class="small text-center text-muted fst-italic">2025 OMPA. Todos os direitos reservados</div>
 					                    </div>
 					                </div>
 					            </div>

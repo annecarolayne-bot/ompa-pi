@@ -11,6 +11,7 @@ import models.Noticia;
 import models.Status;
 import play.Play;
 import play.mvc.Controller;
+import util.CriptografiaUtils;
 
 public class Noticias extends Controller{
 
@@ -20,15 +21,13 @@ public class Noticias extends Controller{
 	}
 	
 	public static void listar(String termo) {
-	    List<Noticia> noticias;
+	    List<Noticia> noticias = null;
 
 	    if (termo == null || termo.trim().isEmpty()) {
-	        noticias = Noticia.find("status = ?1 order by dataPublicacao desc", Status.ATIVO).fetch();
+	        noticias = Noticia.find("status = ?1", Status.ATIVO).fetch();
 	    } else {
-	        String termoBusca = "%" + termo.toLowerCase() + "%";
-	        noticias = Noticia.find(
-	            "(lower(titulo) like ?1 or lower(autor) like ?1 or lower(assunto) like ?1) and status = ?2 order by dataPublicacao desc",
-	            termoBusca,
+	        noticias = Noticia.find("(lower(titulo) like ?1 or lower(autor) like ?1 ) and status = ?2 ",
+	        		"%" + termo.toLowerCase() + "%",
 	            Status.ATIVO
 	        ).fetch();
 	    }
@@ -41,16 +40,19 @@ public class Noticias extends Controller{
 		        noticia.dataPublicacao = new Date();
 		  }
 		 
+		 if (noticia.senha != null) {
+				noticia.senha = CriptografiaUtils.criptografarMD5(noticia.senha);
+			}
+		 
 		 if (imagemCapa != null) {
-		        // Crie um nome único para a imagem
 		        String nomeArquivo = System.currentTimeMillis() + "_" + imagemCapa.getName();
 		        
-		        // Salve a imagem em uma pasta pública do projeto, por exemplo /public/imagens/
 		        File destino = new File(Play.getFile("public/images"), nomeArquivo);
 		        imagemCapa.renameTo(destino);
 
-		        // Salve o caminho da imagem na notícia
 		        noticia.caminhoImagem = "/public/images/" + nomeArquivo;
+		    }else {
+		    	noticia.caminhoImagem = "/public/images/home-bg.jpg";;
 		    }
 		 
 		noticia.save();

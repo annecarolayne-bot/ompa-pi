@@ -10,6 +10,10 @@ public class Assunto extends Model{
 	public String titulo;
 	public String descricao;
 	
+	public Assunto() {
+		
+	}
+	
 	public Assunto(String titulo, String descricao) {
 		super();
 		this.titulo = titulo;
