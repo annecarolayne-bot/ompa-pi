@@ -11,10 +11,14 @@ import models.Noticia;
 import models.Status;
 import play.Play;
 import play.mvc.Controller;
+import play.mvc.With;
+import security.Administrador;
 import util.CriptografiaUtils;
 
+@With(Seguranca.class)
 public class Noticias extends Controller{
 
+	@Administrador
 	public static void form() {
 		List<Assunto> assuntos = Assunto.findAll();
 		render(assuntos);
@@ -35,6 +39,7 @@ public class Noticias extends Controller{
 	    render(noticias, termo);
 	}
 	
+
 	public static void salvar(Noticia noticia, File imagemCapa) {
 		 if (noticia.dataPublicacao == null) {
 		        noticia.dataPublicacao = new Date();
@@ -51,20 +56,22 @@ public class Noticias extends Controller{
 		        imagemCapa.renameTo(destino);
 
 		        noticia.caminhoImagem = "/public/images/" + nomeArquivo;
-		    }else {
+		 }else {
 		    	noticia.caminhoImagem = "/public/images/home-bg.jpg";;
-		    }
+		 }
 		 
 		noticia.save();
 		listar(null);
 	}
 	
+	@Administrador
 	public static void remover(Long id) {
 		Noticia noticia = Noticia.findById(id);
 		noticia.status = Status.INATIVO;
 		noticia.save();
 		listar(null);
 	}
+	
 	
 	public static void editar(Long id) {
 		Noticia n = Noticia.findById(id);

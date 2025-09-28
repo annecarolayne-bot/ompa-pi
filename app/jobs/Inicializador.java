@@ -5,6 +5,8 @@ import java.util.Date;
 import models.Assunto;
 import models.Comentario;
 import models.Noticia;
+import models.Perfil;
+import models.Usuario;
 import play.jobs.Job;
 import play.jobs.OnApplicationStart;
 
@@ -36,6 +38,13 @@ public class Inicializador extends Job{
 		
 		Assunto a4 = new Assunto("Cultura","cultura");
 		a4.save();
+		
+		Usuario u1 = new Usuario("Maria","maria123@gmail.com", "123");
+		u1.save();
+		
+		Usuario u2 = new Usuario("João","joao111@gmail.com", "111");
+		u2.perfil = Perfil.ADMINISTRADOR;
+		u2.save();
 		
 		}	
 	}

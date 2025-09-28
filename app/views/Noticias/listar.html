@@ -18,6 +18,28 @@
                 </div>
             </div>
       </header>
+	  #{if flash.success}
+	  											    <div class="alert alert-success alert-dismissible fade show" role="alert">
+	  											        ${flash.success}
+	  											    </div>
+	  											#{/if}
+
+	  											#{if flash.error}
+	  											    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+	  											        ${flash.error}
+	  											    </div>
+	  											#{/if}
+	  
+	  #{if session['usuarioLogado']}
+	  			   						<p>
+	  			   							${session['usuarioLogado']}
+	  			   							<a class="link-danger link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="@{Logins.logout}" > - Logout</a>
+	  			   						</p>
+	  			   					#{/if}
+	  								
+	  								<br/>
+									
+									
 
 	  <div class="container px-4 px-lg-5">
 	              <div class="row gx-4 gx-lg-5 justify-content-center">
@@ -51,6 +73,98 @@
 	                              <a href="#">${n.autor}</a>
 	                              em ${n.dataPublicacao}
 	                          </p>
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
+							  
 	                      </div>
 	                      <!-- Divider-->
 	                      <hr class="my-4" />
