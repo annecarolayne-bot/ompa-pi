@@ -47,16 +47,6 @@
 <form action="@{Comentarios.salvar}" method="POST"> 
 	    <input type="hidden" name="comentario.id" value="${comentario?.id}" />
 		<input type="hidden" name="comentario.noticia.id" value="${noticia?.id}" />
-		
-		<label class="form-label">Autor: </label>
-		<input type="text" class="form-control" name="comentario.autor" value="${comentario?.autor}"/>
-	
-		#{ifnot comentario} 
-		</br>
-		<label class="form-label">Senha: </label>
-		<input type="password" class="form-control" name="comentario.senha"/>
-		#{/ifnot}
-		</br>
 							
 		<label class="form-label">Conteúdo: </label>
 		<input type="text" class="form-control" name="comentario.conteudo" value="${comentario?.conteudo}" />

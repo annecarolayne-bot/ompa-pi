@@ -17,8 +17,6 @@ public class Comentario extends Model{
 	public String conteudo;
 	public Integer curtidas;
 	public Integer descurtidas;
-	public String autor;
-	public String senha;
 	
 	@Temporal(TemporalType.DATE)
 	public Date data;
@@ -29,14 +27,16 @@ public class Comentario extends Model{
 	@ManyToOne
 	public Noticia noticia;
 	
+	@ManyToOne
+	public Usuario autor;
+	
 	public Comentario() {
 		this.status = Status.ATIVO;
 	}
 
-	public Comentario(String conteudo, String autor, Integer curtidas, Integer descurtidas, Noticia noticia) {
+	public Comentario(String conteudo, Integer curtidas, Integer descurtidas, Noticia noticia) {
 		this.status = Status.ATIVO;
 		this.conteudo = conteudo;
-		this.autor = autor;
 		this.curtidas = curtidas;
 		this.noticia = noticia;
 		

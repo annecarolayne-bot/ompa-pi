@@ -6,7 +6,7 @@ import java.util.List;
 import models.Comentario;
 import models.Noticia;
 import models.Status;
-
+import models.Usuario;
 import play.mvc.Controller;
 import play.mvc.results.Result;
 import util.CriptografiaUtils;
@@ -36,19 +36,30 @@ public class Comentarios extends Controller {
 
 	//Recebe o comentario a ser salvo
 	public static void salvar(Comentario comentario) {
-		//Se o comentario for novo, cadastra a data atual nele
+		
+		if(comentario.id == null) {
+		
 		if (comentario.data == null) {
 			comentario.data = new Date();
 		}
 		
-		//Criptografa a senha recebida
-		if (comentario.senha != null) {
-			comentario.senha = CriptografiaUtils.criptografarMD5(comentario.senha);
-		}
-		
+		comentario.autor = Usuario.find("lower(email) like ?1" , session.get("usuarioLogado").toLowerCase()).first();
+		comentario.save();	
 		//salva o comentario e armazena a mensagem de sucesso no flash
 		flash.success("Comentário salvo com sucesso!");
-		comentario.save();
+		
+		} else {
+			if(comentario.autor.email.equalsIgnoreCase(session.get("usuarioLogado"))) {
+				if (comentario.data == null) {
+					comentario.data = new Date();
+				}
+				
+				comentario.save();
+				flash.success("Comentário editado com sucesso!");	
+			}else {
+				flash.error("Impossível editar este comentário, você não é o autor.");
+			}
+		}
 		
 		//Vai para o listar que recebe um noticiaId
 		listar(comentario.noticia.id);
@@ -56,13 +67,18 @@ public class Comentarios extends Controller {
 
 	//Recebe o id do comentario a ser removido    
 	public static void remover(Long id) {
-		//Acha esse comentario pelo id e realiza a exclusão lógica
-		Comentario comentario = Comentario.findById(id);
-
-		comentario.status = Status.INATIVO;
-		comentario.save();
-		flash.success("Comentário removido com sucesso.");
+		//Acha um comentario pelo id e realiza a exclusão lógica
 		
+		Comentario comentario = Comentario.findById(id);
+		
+       if(comentario.autor.email.equalsIgnoreCase(session.get("usuarioLogado"))){
+    	   comentario.status = Status.INATIVO;
+   		comentario.save();
+   		flash.success("Comentário removido com sucesso.");
+       }else {
+    	   flash.error("Impossível excluir o comentário, você não é o autor.");
+       }
+
 		//Vai para o listar que recebe um noticiaId
 		listar(comentario.noticia.id);
 	}

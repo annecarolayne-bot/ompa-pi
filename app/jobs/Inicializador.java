@@ -24,7 +24,11 @@ public class Inicializador extends Job{
 		n2.dataPublicacao = new Date();
 		n2.save();
 		
-		Comentario c1 = new Comentario("Muito legal, recomendo!","José", 120,0, n1);
+		Usuario u1 = new Usuario("Maria","maria123@gmail.com", "123");
+		u1.save();
+		
+		Comentario c1 = new Comentario("Muito legal, recomendo!", 120,0, n1);
+		c1.autor = u1;
 		c1.save();
 		
 		Assunto a1 = new Assunto("Tecnologia","tecnologia");
@@ -38,9 +42,6 @@ public class Inicializador extends Job{
 		
 		Assunto a4 = new Assunto("Cultura","cultura");
 		a4.save();
-		
-		Usuario u1 = new Usuario("Maria","maria123@gmail.com", "123");
-		u1.save();
 		
 		Usuario u2 = new Usuario("João","joao111@gmail.com", "111");
 		u2.perfil = Perfil.ADMINISTRADOR;
