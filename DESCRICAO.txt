@@ -1,0 +1,156 @@
+ * Autora: Anne Carolayne Pereira da Silva Augusto
+ *
+ * Data de criação do projeto: 30/06/2025
+ * ##############################################
+
+
+/** app/controllers/Comentarios.java
+ *
+ * Objetivo: Controlador responsável por gerenciar as operações relacionadas a comentários,
+ *           incluindo criação, edição, listagem e exclusão de comentários.
+
+- public static void form(Long noticiaId)
+Descrição: Recebe o ID de uma notícia, busca essa notícia no banco de dados e renderiza o formulário para cadastro de um novo comentário vinculado a essa notícia.
+
+- public static void listar(Long noticiaId)
+Descrição: Recebe o ID de uma notícia, busca a notícia e todos os comentários ativos vinculados a ela, calcula o total de comentários e envia estes dados para a view de listagem.
+
+- public static void salvar(Comentario comentario)
+Descrição: Salva ou edita um comentário. Se o comentário não possui ID, salva como novo; caso contrário, edita o existente (apenas se o usuário logado for o autor). Salva a data caso não esteja preenchida. Após a operação, redireciona para a listagem de comentários da notícia relacionada.
+
+- public static void remover(Long id)
+Descrição: Realiza a exclusão lógica (status INATIVO) de um comentário, desde que o usuário logado seja o autor do comentário. Redireciona para a lista da notícia correspondente.
+
+- public static void editar(Long id)
+Descrição: Busca um comentário pelo ID e renderiza o formulário para edição, passando também a notícia vinculada ao comentário.
+
+- public static void curtir(Long id)
+Descrição: Incrementa o número de curtidas de um comentário pelo seu ID e salva a alteração. Redireciona para a lista de comentários da notícia correspondente.
+
+- public static void descurtir(Long id)
+Descrição: Incrementa o número de descurtidas de um comentário pelo seu ID e salva a alteração. Redireciona para a listagem de comentários da notícia correspondente.
+
+
+ /** app/controllers/Logins.java
+ *
+ * Objetivo: Gerenciar a autenticação de usuários, recebendo informações de login
+ *           e controlando o fluxo de autenticação da aplicação.
+- public static void form()
+Descrição: Renderiza o formulário de login.
+
+- public static void logar(String email, String senha)
+Descrição: Realiza a autenticação do usuário. Busca o usuário pelo email e senha, e, caso encontrado, coloca o email e perfil na sessão e redireciona para a listagem de notícias. Se não encontrado, exibe mensagem de erro e retorna ao formulário de login.
+
+- public static void logout()
+Descrição: Limpa a sessão, exibe mensagem de sucesso e retorna ao formulário de login.
+
+
+/** app/controllers/Noticias.java
+ *
+ * Objetivo: Controlador responsável pelas ações relacionadas a notícias,
+ *           como cadastro, edição, listagem e exibição de notícias.
+
+- @Administrador
+- public static void form()
+Descrição: Busca todos os assuntos cadastrados e renderiza o formulário de cadastro/edição de notícia. Requer perfil de administrador.
+
+- public static void listar(String termo)
+Descrição: Lista notícias ativas. Se um termo de busca for fornecido, filtra por título ou autor que contenham o termo. Renderiza a view de listagem com os resultados.
+
+- public static void salvar(Noticia noticia, File imagemCapa)
+Descrição: Salva uma nova notícia ou edita uma existente. Define a data de publicação se não informada, criptografa a senha (se informada), armazena a imagem de capa (ou uma padrão) e salva a notícia, redirecionando para a listagem.
+
+- @Administrador
+- public static void remover(Long id)
+Descrição: Realiza exclusão lógica (status INATIVO) de uma notícia, apenas para administradores. Redireciona para a listagem.
+
+- public static void editar(Long id)
+Descrição: Busca uma notícia pelo ID e todos os assuntos para edição, renderizando o formulário correspondente.
+
+
+/** app/controllers/Seguranca.java
+ *
+ * Objetivo: Controlador dedicado a funcionalidades de segurança,
+ *           como controle de acesso e autorização de usuários.
+
+- @Before
+- static void verificarAutenticacao()
+Descrição: Verifica se existe usuário logado na sessão. Caso não exista, exibe mensagem de erro e redireciona para o formulário de login.
+
+- @Before
+- static void verificarAdministrador()
+Descrição: Verifica se o método ou classe está anotado com @Administrador. Se sim, confere se o perfil do usuário na sessão é de administrador. Caso contrário, bloqueia o acesso.
+
+
+/** app/models/Assunto.java
+ *
+ * Objetivo: Representa um assunto, tema ou categoria utilizada na classificação
+ *           de conteúdos do sistema.
+
+- public Assunto()
+Descrição: Construtor padrão da entidade Assunto.
+
+- public Assunto(String titulo, String descricao)
+Descrição: Construtor que inicializa os atributos título e descrição do assunto.
+
+- @Override
+- public String toString()
+Descrição: Retorna uma representação em texto do assunto, incluindo título e descrição.
+
+
+/** app/models/Comentario.java
+*
+ * Objetivo: Modela os comentários realizados pelos usuários,
+ *           armazenando autor, conteúdo e referência ao item comentado.
+
+- public Comentario()
+Descrição: Construtor padrão. Inicializa o status como ATIVO.
+
+- public Comentario(String conteudo, Integer curtidas, Integer descurtidas, Noticia noticia)
+Descrição: Construtor que inicializa os atributos com valores passados. Status iniciado como ATIVO.
+
+
+/** app/models/Noticia.java
+*
+ * Objetivo: Representa uma notícia, com atributos para título, conteúdo, data,
+ *           autor e relacionamentos com comentários.
+
+- public Noticia()
+Descrição: Construtor padrão. Inicializa o status como ATIVO.
+
+- public Noticia(String titulo, String conteudo, String autor)
+Descrição: Construtor que inicializa título, conteúdo e autor, com status ATIVO.
+
+- @Override
+- public String toString()
+Descrição: Retorna uma string com informações da notícia, incluindo título, conteúdo, autor, assunto e data de publicação.
+
+
+/** app/models/Perfil.java
+*
+ * Objetivo: Model simples para tipos de perfil de usuário, como administrador,
+ *           visitante ou editor. É um enum.
+
+
+/** app/models/Status.java
+*
+ * Objetivo: Representa o status de entidades, por exemplo: ativo, inativo, pendente, etc. É um enum.
+ *
+
+
+/** app/models/Usuario.java
+ *
+ * Objetivo: Model de usuário, contém dados de identificação, login e associações
+ *           com perfis, comentários e outras entidades do sistema.
+
+- public Usuario()
+Descrição: Construtor padrão da entidade Usuário.
+
+- public Usuario(String nome, String email, String senha)
+Descrição: Construtor que inicializa nome, email e senha do usuário. Perfil padrão é MEMBRO.
+
+
+
+
+
+
