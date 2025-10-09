@@ -16,15 +16,17 @@ public class Usuario extends Model{
 	@Enumerated(EnumType.STRING)
 	public Perfil perfil;
 	
-	public Usuario() {
+	@Enumerated(EnumType.STRING)
+	public Status status;
 	
+	public Usuario() {
+		this.perfil = Perfil.MEMBRO;		
 	}
 	
 	public Usuario(String nome, String email, String senha) {
 		this.nome = nome;
 		this.email = email;
 		this.senha = senha;
-		this.perfil = Perfil.MEMBRO;
 	}
 	
 	

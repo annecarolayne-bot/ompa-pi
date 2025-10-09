@@ -25,6 +25,7 @@ public class Inicializador extends Job{
 		n2.save();
 		
 		Usuario u1 = new Usuario("Maria","maria123@gmail.com", "123");
+		u1.perfil = Perfil.MEMBRO;
 		u1.save();
 		
 		Comentario c1 = new Comentario("Muito legal, recomendo!", 120,0, n1);

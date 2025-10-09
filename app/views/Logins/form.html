@@ -1,56 +1,121 @@
 #{extends 'main2.html' /}
 #{set title:'Login' /}
 
-
 <div class="container">
-	
-	<div class="login-box row g-0">
-	  <!-- Imagem à esquerda -->
-	  <div class="col-md-6 d-flex align-items-center justify-content-center login-image">
-	    <img src="@{'/public/images/logo-ompa.png'}" alt="Login Icon">
-	  </div>
-	  
-	  <div class="col-md-6 px-4">
-	      <h4 class="mb-4 text-center fw-bold">Login</h4>
-								
-								#{if flash.success}
-									    <div class="alert alert-success alert-dismissible fade show" role="alert">
-									        ${flash.success}
-									    </div>
-									#{/if}
+        <div class="content first-content">
+            <div class="first-column">
+                <h2 class="title title-primary">Bem-vindo de Volta!</h2>
+                <p class="description description-primary">Para continuar logado conosco</p>
+                <p class="description description-primary"> use suas informações pessoais e acesse sua conta</p>
+                <button id="signin" class="btn btn-primary">entrar</button>
+            </div>    
+            <div class="second-column">
+                <h2 class="title title-second">Nova conta</h2>
+                <div class="social-media">
+                    <ul class="list-social-media">
+                        <a class="link-social-media" href="#">
+                            <li class="item-social-media">
+                                <i class="fab fa-facebook-f"></i>        
+                            </li>
+                        </a>
+                        <a class="link-social-media" href="#">
+                            <li class="item-social-media">
+                                <i class="fab fa-google-plus-g"></i>
+                            </li>
+                        </a>
+                        <a class="link-social-media" href="#">
+                            <li class="item-social-media">
+                                <i class="fab fa-linkedin-in"></i>
+                            </li>
+                        </a>
+                    </ul>
+                </div><!-- social media -->
+                <p class="description description-second">ou use seu email para entrar:</p>
+				
+				<div>
+							
+														#{if flash.success}
+															    <div class="alert alert-success alert-dismissible fade show" role="alert">
+															        ${flash.success}
+															    </div>
+															#{/if}
 
-									#{if flash.error}
-									    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-									        ${flash.error}
-									    </div>
-									#{/if}
-<form action="@{Logins.logar}" method="post"> 
-		
-	<div class="mb-3">
-		<label class="form-label" >Email:  </label>
-		<input type="email" class="form-control" name="email" required/>
-		</div>
-		
-		<div class="mb-3">
-		<label class="form-label">Senha: </label>
-		<input type="password" class="form-control" name="senha" required/>
-		</div>
+															#{if flash.error}
+															    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+															        ${flash.error}
+															    </div>
+															#{/if}
+															</div>		
+				
 
-		<div class="d-grid mb-3">
-		        <button type="submit" class="btn btn-login">LOGAR</button>
-		      </div>
-			  <div class="text-center login-footer">
-			         <small><a href="#">Forgot Username / Password?</a></small>
-			       </div>
-			       <div class="text-center login-footer mt-3">
-			         <small><a href="#">Create your Account →</a></small>
-			       </div>
+                <form action="@{Usuarios.salvar}" method="post" class="form">
+                    <label class="label-input" for="">
+                        <i class="far fa-user icon-modify"></i>
+                        <input type="text" name="usuario.nome" placeholder="Name" required>
+                    </label>
+                    
+                    <label class="label-input" for="">
+                        <i class="far fa-envelope icon-modify"></i>
+                        <input type="email" name="usuario.email"  placeholder="Email" required>
+                    </label>
+                    
+                    <label class="label-input" for="">
+                        <i class="fas fa-lock icon-modify"></i>
+                        <input type="password" name="usuario.senha"  placeholder="Password" required>
+                    </label>
+                    
+                    
+                    <button class="btn btn-second">Entrar</button>        
+                </form>
+            </div><!-- second column -->
+        </div><!-- first content -->
+        <div class="content second-content">
+            <div class="first-column">
+                <h2 class="title title-primary">Olá, Estudante!</h2>
+                <p class="description description-primary">Insira seus dados pessoais</p>
+                <p class="description description-primary">e comece sua jornada no OMPA</p>
+                <button id="signup" class="btn btn-primary">Iniciar</button>
+            </div>
+            <div class="second-column">
+                <h2 class="title title-second">Login</h2>
+                <div class="social-media">
+                    <ul class="list-social-media">
+                        <a class="link-social-media" href="#">
+                            <li class="item-social-media">
+                                <i class="fab fa-facebook-f"></i>
+                            </li>
+                        </a>
+                        <a class="link-social-media" href="#">
+                            <li class="item-social-media">
+                                <i class="fab fa-google-plus-g"></i>
+                            </li>
+                        </a>
+                        <a class="link-social-media" href="#">
+                            <li class="item-social-media">
+                                <i class="fab fa-linkedin-in"></i>
+                            </li>
+                        </a>
+                    </ul>
+                </div><!-- social media -->
+                <p class="description description-second">ou use seu email para entrar:</p>
+                <form action="@{Logins.logar}" method="post" class="form">
+                
+                    <label class="label-input" for="">
+                        <i class="far fa-envelope icon-modify"></i>
+                        <input type="email" name="email" placeholder="Email" required>
+                    </label>
+                
+                    <label class="label-input" for="">
+                        <i class="fas fa-lock icon-modify"></i>
+                        <input type="password" name="senha" placeholder="Password" required>
+                    </label>
+                
+                    <a class="password" href="#">Esqueceu sua senha?</a>
+                    <button class="btn btn-second">Logar</button>
+                </form>
+            </div><!-- second column -->
+        </div><!-- second-content -->
+    </div>
 
-		 
-</form>
 
-</div>
-</div>
-
-</br>
 
