@@ -13,8 +13,8 @@ import play.db.jpa.Model;
 
 @Entity
 public class Comentario extends Model{
-
 	public String conteudo;
+	
 	public Integer curtidas;
 	public Integer descurtidas;
 	

@@ -7,6 +7,12 @@
 body {
     font-family: 'Open Sans', sans-serif;
 }
+
+.erros{
+	color: red;
+	font-size: 0.9em;
+}
+
 .container {
     display: flex;
     justify-content: center;

@@ -45,9 +45,19 @@
 															        ${flash.error}
 															    </div>
 															#{/if}
-															</div>		
-				
+														</div>															
+		
+														<!--#{ifErrors}
+		<p>Ops...</p>
+		#{errors}
+		<span class="error"> ${error.key} - ${error} </span>
+		#{/errors}
+		#{/ifErrors}
+		-->	
 
+		
+		<!--Colocar só o assunto.put no editar para recuperar o assunto quando houver um erro de validação-->
+		
                 <form action="@{Usuarios.salvar}" method="post" class="form">
                     <label class="label-input" for="">
                         <i class="far fa-user icon-modify"></i>
@@ -58,12 +68,13 @@
                         <i class="far fa-envelope icon-modify"></i>
                         <input type="email" name="usuario.email"  placeholder="Email" required>
                     </label>
+					
                     
                     <label class="label-input" for="">
                         <i class="fas fa-lock icon-modify"></i>
-                        <input type="password" name="usuario.senha"  placeholder="Password" required>
+                        <input type="password" name="usuario.senha"  placeholder="Password" value="${flash['usuario.senha']}">
                     </label>
-                    
+					<span class="erros"> #{error 'usuario.senha'/} </span>
                     
                     <button class="btn btn-second">Entrar</button>        
                 </form>
@@ -103,6 +114,7 @@
                     <label class="label-input" for="">
                         <i class="far fa-envelope icon-modify"></i>
                         <input type="email" name="email" placeholder="Email" required>
+	
                     </label>
                 
                     <label class="label-input" for="">
@@ -116,6 +128,9 @@
             </div><!-- second column -->
         </div><!-- second-content -->
     </div>
+
+	
+	
 
 
 

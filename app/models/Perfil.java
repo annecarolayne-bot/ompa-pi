@@ -1,5 +1,5 @@
 package models;
 
 public enum Perfil {
-	ADMINISTRADOR, MEMBRO 
+	ALUNO, RESPONSAVEL 
 }

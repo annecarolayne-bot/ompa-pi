@@ -2,10 +2,12 @@ package jobs;
 
 import java.util.Date;
 
+import models.Aluno;
 import models.Assunto;
 import models.Comentario;
 import models.Noticia;
 import models.Perfil;
+import models.Responsavel;
 import models.Usuario;
 import play.jobs.Job;
 import play.jobs.OnApplicationStart;
@@ -24,12 +26,32 @@ public class Inicializador extends Job{
 		n2.dataPublicacao = new Date();
 		n2.save();
 		
-		Usuario u1 = new Usuario("Maria","maria123@gmail.com", "123");
-		u1.perfil = Perfil.MEMBRO;
-		u1.save();
+		Usuario usuarioJoao = new Usuario();
+		usuarioJoao.nome = "joao";
+		usuarioJoao.email = "joao123@gmail.com";
+		usuarioJoao.senha = "123";
+		usuarioJoao.perfil = Perfil.RESPONSAVEL;
+		usuarioJoao.save();
+		
+		Responsavel joao = new Responsavel();
+		joao.usuario = usuarioJoao;
+		joao.save();
+		
+		Usuario usuarioAna = new Usuario();
+		usuarioAna.nome = "ana";
+		usuarioAna.email = "ana456@gmail.com";
+		usuarioAna.senha = "456";
+		usuarioAna.perfil = Perfil.ALUNO;
+		usuarioAna.save();
+		
+		Aluno ana = new Aluno();
+		ana.usuario = usuarioAna;
+		ana.curso = "Informática";
+		ana.matricula = "20221064010008";
+		ana.save();
 		
 		Comentario c1 = new Comentario("Muito legal, recomendo!", 120,0, n1);
-		c1.autor = u1;
+		c1.autor = usuarioAna;
 		c1.save();
 		
 		Assunto a1 = new Assunto("Tecnologia","tecnologia");
@@ -44,9 +66,7 @@ public class Inicializador extends Job{
 		Assunto a4 = new Assunto("Cultura","cultura");
 		a4.save();
 		
-		Usuario u2 = new Usuario("João","joao111@gmail.com", "111");
-		u2.perfil = Perfil.ADMINISTRADOR;
-		u2.save();
+	
 		
 		}	
 	}
