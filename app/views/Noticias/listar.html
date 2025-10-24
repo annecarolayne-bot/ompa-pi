@@ -29,14 +29,7 @@
 	  											        ${flash.error}
 	  											    </div>
 	  											#{/if}
-	  
-	  #{if session['usuarioLogado']}
-	  			   						<p>
-	  			   							${session['usuarioLogado']}
-	  			   							<a class="link-danger link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover" href="@{Logins.logout}" > - Logout</a>
-	  			   						</p>
-	  			   					#{/if}
-	  								
+	
 	  								<br/>
 									
 									
@@ -70,7 +63,7 @@
 							
 	                          <p class="post-meta">
 	                              Publicado por 
-	                              <a href="#">${n.autor}</a>
+	                              <a href="#">${n.nomeAutor}</a>
 	                              em ${n.dataPublicacao}
 	                          </p>
 							  

@@ -7,10 +7,13 @@ import models.Comentario;
 import models.Noticia;
 import models.Status;
 import models.Usuario;
+import play.data.validation.Valid;
 import play.mvc.Controller;
+import play.mvc.With;
 import play.mvc.results.Result;
 import util.CriptografiaUtils;
 
+@With(Seguranca.class)
 public class Comentarios extends Controller {
 
 	//Recebe o Id da Noticia porque eu quero cadastrar o comentario visualizando a noticia encima
@@ -35,7 +38,13 @@ public class Comentarios extends Controller {
 	}
 
 	//Recebe o comentario a ser salvo
-	public static void salvar(Comentario comentario) {
+	public static void salvar(@Valid Comentario comentario) {
+		
+		if(validation.hasErrors()) {
+			params.flash();
+			validation.keep();
+			Comentarios.form(comentario.noticia.id);
+		}
 		
 		if(comentario.id == null) {
 		

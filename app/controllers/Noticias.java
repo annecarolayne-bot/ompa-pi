@@ -9,7 +9,9 @@ import models.Assunto;
 import models.Noticia;
 
 import models.Status;
+import models.Usuario;
 import play.Play;
+import play.data.validation.Valid;
 import play.mvc.Controller;
 import play.mvc.With;
 import security.Administrador;
@@ -30,7 +32,7 @@ public class Noticias extends Controller{
 	    if (termo == null || termo.trim().isEmpty()) {
 	        noticias = Noticia.find("status = ?1", Status.ATIVO).fetch();
 	    } else {
-	        noticias = Noticia.find("(lower(titulo) like ?1 or lower(autor) like ?1 ) and status = ?2 ",
+	        noticias = Noticia.find("(lower(titulo) like ?1 or lower(nomeAutor) like ?1 ) and status = ?2 ",
 	        		"%" + termo.toLowerCase() + "%",
 	            Status.ATIVO
 	        ).fetch();
@@ -40,15 +42,14 @@ public class Noticias extends Controller{
 	}
 	
 
-	public static void salvar(Noticia noticia, File imagemCapa) {
-		 if (noticia.dataPublicacao == null) {
-		        noticia.dataPublicacao = new Date();
-		  }
-		 
-		 if (noticia.senha != null) {
-				noticia.senha = CriptografiaUtils.criptografarMD5(noticia.senha);
-			}
-		 
+	public static void salvar(@Valid Noticia noticia, File imagemCapa) {
+		
+		if(validation.hasErrors()) {
+			params.flash();
+			validation.keep();
+			Noticias.form();
+		}
+		
 		 if (imagemCapa != null) {
 		        String nomeArquivo = System.currentTimeMillis() + "_" + imagemCapa.getName();
 		        
@@ -58,6 +59,20 @@ public class Noticias extends Controller{
 		        noticia.caminhoImagem = "/public/images/" + nomeArquivo;
 		 }else {
 		    	noticia.caminhoImagem = "/public/images/home-bg.jpg";;
+		 }
+		 
+		 noticia.autor = Usuario.find("lower(email) like ?1" , session.get("usuarioLogado").toLowerCase()).first();
+		  
+		 if(noticia.id == null) {
+			noticia.nomeAutor = noticia.autor.nome;
+			
+			 if (noticia.dataPublicacao == null) {
+			        noticia.dataPublicacao = new Date();
+			 }
+		 }else {
+			 if (noticia.dataEdicao == null) {
+			        noticia.dataEdicao = new Date();
+			 }
 		 }
 		 
 		noticia.save();

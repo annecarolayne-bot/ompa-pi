@@ -91,6 +91,112 @@
   }
 }
 
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -300px; /* começa escondido à esquerda */
+  width: 300px;
+  height: 100%;
+  background-color: #fff;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+  transition: left 0.3s ease;
+  z-index: 1000;
+  padding-top: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* empurra o logout pra baixo */
+}
+
+.sidebar.active {
+  left: 0;
+}
+/* Perfil */
+.sidebar .profile {
+  text-align: center;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.sidebar .profile img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.sidebar .profile h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.sidebar .profile p {
+  color: #666;
+  font-size: 14px;
+}
+
+/* ===== Menu ===== */
+/* Menu */
+.sidebar .menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.sidebar .menu li {
+  padding: 15px 25px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #444;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.sidebar .menu li:hover {
+  background-color: #f2f2f2;
+}
+
+.sidebar .menu li.active {
+  background-color: #6a0dad;
+  color: #fff;
+}
+
+/* ===== Botão de Logout ===== */
+.logout-btn {
+  text-decoration: none;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.logout-btn:hover {
+  color: #e63e3e;
+}
+
+/* Ícones (usa Font Awesome) */
+.sidebar i {
+  width: 20px;
+  text-align: center;
+}
+
+/* ===== Responsivo ===== */
+@media (max-width: 600px) {
+  .sidebar {
+    width: 250px;
+  }
+}
+
+.profile-icon {
+  width: 40px;
+  height: 40px;
+  margin-right: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
 body {
   margin: 0;
   font-family: var(--bs-body-font-family);

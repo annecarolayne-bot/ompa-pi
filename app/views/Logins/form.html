@@ -61,14 +61,15 @@
                 <form action="@{Usuarios.salvar}" method="post" class="form">
                     <label class="label-input" for="">
                         <i class="far fa-user icon-modify"></i>
-                        <input type="text" name="usuario.nome" placeholder="Name" required>
+                        <input type="text" name="usuario.nome" placeholder="Name" value="${flash['usuario.nome']}">
                     </label>
+					<span class="erros"> #{error 'usuario.nome'/} </span>
                     
                     <label class="label-input" for="">
                         <i class="far fa-envelope icon-modify"></i>
-                        <input type="email" name="usuario.email"  placeholder="Email" required>
+                        <input type="email" name="usuario.email"  placeholder="Email" value="${flash['usuario.email']}">
                     </label>
-					
+					<span class="erros"> #{error 'usuario.email'/} </span>
                     
                     <label class="label-input" for="">
                         <i class="fas fa-lock icon-modify"></i>
@@ -113,13 +114,15 @@
                 
                     <label class="label-input" for="">
                         <i class="far fa-envelope icon-modify"></i>
-                        <input type="email" name="email" placeholder="Email" required>
+                        <input type="email" name="email" placeholder="Email" value="${flash['email']}" required>
+						<span class="erros"> #{error 'email'/} </span>
 	
                     </label>
                 
                     <label class="label-input" for="">
                         <i class="fas fa-lock icon-modify"></i>
-                        <input type="password" name="senha" placeholder="Password" required>
+                        <input type="password" name="senha" placeholder="Password" value="${flash['senha']}" required>
+						<span class="erros"> #{error 'senha'/} </span>
                     </label>
                 
                     <a class="password" href="#">Esqueceu sua senha?</a>
@@ -129,6 +132,8 @@
         </div><!-- second-content -->
     </div>
 
+	
+	<!--Perguntar a Lucas da validação no Login-->
 	
 	
 

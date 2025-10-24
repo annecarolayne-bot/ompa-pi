@@ -9,10 +9,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import play.data.validation.Required;
 import play.db.jpa.Model;
 
 @Entity
 public class Comentario extends Model{
+	
+	@Required
 	public String conteudo;
 	
 	public Integer curtidas;
@@ -22,9 +25,11 @@ public class Comentario extends Model{
 	public Date data;
 	
 	@Enumerated(EnumType.STRING)
+	@Required
 	public Status status;
 	
 	@ManyToOne
+	@Required
 	public Noticia noticia;
 	
 	@ManyToOne

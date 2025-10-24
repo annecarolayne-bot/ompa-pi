@@ -1,0 +1,25 @@
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background-color: #ffff;
+  text-align: center;
+  align-itens: center;
+  padding-top: 10%;
+  color: #333;
+}
+
+.error-container h1 {
+  font-size: 100px;
+  color: #dc3545;
+}
+
+.error-container h2 {
+  margin-bottom: 10px;
+  color: #444;
+}
+
+.error-container a {
+  color: #0d6efd;
+  text-decoration: none;
+  margin-top: 20px;
+  display: inline-block;
+}

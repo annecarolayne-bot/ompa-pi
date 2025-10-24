@@ -2,18 +2,11 @@
 
 <html>
     <head>
-        <title>Not found</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=${_response_encoding}"/>    
+        <title>Acesso negado</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=${_response_encoding}"/>  
+		<link rel="stylesheet" href="@{'/public/stylesheets/error.css'}">  
     </head>
-    <body>
-        #{if play.mode.name() == 'DEV'}
-            #{404 result /}
-        #{/if}
-        #{else}
-            <h1>Not found</h1>
-            <p>
-                ${result.message}
-            </p>
-        #{/else}
-    </body>
+	<body> 
+		<img src="@{'/public/images/baixados.png'}" alt="Erro 403" width="730px"/>
+	</body>
 </html>

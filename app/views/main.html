@@ -23,7 +23,9 @@
 		
 		<!-- Navigation-->
 		       <nav class="navbar navbar-expand-lg navbar-ligth" id="mainNav">
+				
 		           <div class="container px-4 px-lg-5" >
+					<img src="@{'/public/images/avatar.png'}" alt="Perfil" class="profile-icon" onclick="toggleSidebar()">
 		               <a class="navbar-brand" href="@{Noticias.listar}" style="color: rgb(118, 227, 9);">OMPA News</a>
 		               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" style="color: rgb(118, 227, 9);">
 		                   Menu
@@ -48,6 +50,30 @@
 		           </div>
 		       </nav>
 			
+			   <!-- Sidebar -->
+			   <aside id="sidebar" class="sidebar">
+			     <div class="profile">
+			       <img src="@{'/public/images/avatar.png'}" alt="Foto de Perfil">
+				   
+				   #{if session['usuarioLogado']}	
+															<h3>${session['usuarioLogado']}</h3>
+				   	  			   					#{/if}
+				   #{if session['usuarioPerfil']}	
+										<p>${session['usuarioPerfil']}</p>
+								#{/if}					
+													
+			     </div>
+			     <ul class="menu">
+			       <li class="active"><i class="fa-solid fa-users"></i> Usuários</li>
+			       <li><i class="fa-solid fa-bell"></i> Notificações</li>
+			       <li><i class="fa-solid fa-box"></i> Produtos</li>
+			       <li><i class="fa-solid fa-image"></i> Imagens</li>
+			       <li><i class="fa-solid fa-gear"></i> Configurações</li>
+			       <li><a href="@{Logins.logout}" class="logout-btn">
+			         <i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+			     </ul>
+
+			   </aside>
 			   
 			
 				#{doLayout /}
@@ -92,6 +118,12 @@
 					                </div>
 					            </div>
 					        </footer>
+							
+							<script>
+							function toggleSidebar() {
+							  document.getElementById("sidebar").classList.toggle("active");
+							}
+							</script>
 		 
 		 <script src="@{'/public/javascripts/jquery-1.6.4.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
 		 <script src="@{'/public/bootstrap-5.3.7-dist/js/bootstrap.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>

@@ -21,7 +21,7 @@ public class Seguranca extends Controller{
       	   Administrador adminAnnotation = getActionAnnotation(Administrador.class);
       	   if (adminAnnotation != null && 
       			   !Perfil.RESPONSAVEL.name().equals(perfil)) {
-              forbidden("Acesso restrito aos responsáveis pelo sistema");
+              renderTemplate("errors/403.html");
       	    }
 	}
 	

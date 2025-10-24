@@ -31,22 +31,11 @@
 <form action="@{Noticias.salvar}" method="post" enctype="multipart/form-data"> 
 		<input type="hidden" name="noticia.id" value="${n?.id}" />
 		
-		<label class="form-label" >Autor: </label>
-		<input type="text" class="form-control" name="noticia.autor" value="${n?.autor}" required/>
-		
-		
-		#{ifnot n} 
-		</br>
-				<label class="form-label">Senha: </label>
-				<input type="password" class="form-control" name="noticia.senha"/>
-				#{/ifnot}
-				</br>
-		
 		<label class="form-label">Título: </label>
-		<input type="text" class="form-control" name="noticia.titulo" value="${n?.titulo}" required/>
+		<input type="text" class="form-control" name="noticia.titulo" value="${flash['noticia.titulo'] ? flash['noticia.titulo'] : n?.titulo}"/>
 		
+				<span class="erros"> #{error 'noticia.titulo'/} </span>
 		</br>
-		
 		
 		<div class="mb-3">
 				<label class="form-label">Assunto:</label>
@@ -58,17 +47,19 @@
 						</option>
 					#{/list}
 				</select>
+				<span class="erros"> #{error 'noticia.assunto.id'/} </span>
 		</div>
 			
+	<!--Lidar com value="${flash['imagemCapa'] ? flash['noticia.titulo'] : n?.titulo}" e ver se precisa ser CaminhoImagem-->
 		<label class="form-label">Imagem de capa:</label>
-		<input type="file" class="form-control" name="imagemCapa" accept="image/*"  required/>
+		<input type="file" class="form-control" name="imagemCapa" accept="image/*" required/>
 		</br>   
 			   
 		<div class="form-floating">
-		  <textarea class="form-control" name="noticia.conteudo" id="floatingTextarea" required>${n?.conteudo?.raw()}</textarea>
+		  <textarea class="form-control" name="noticia.conteudo" id="floatingTextarea">${flash['noticia.conteudo'] ? flash['noticia.conteudo'] : n?.conteudo}</textarea>
 		  <label for="floatingTextarea">Conteúdo</label>
+		  <span class="erros"> #{error 'noticia.conteudo'/} </span>
 	  </div>
-		
 		</br>
 		
 		<input type="submit" class="btn btn-primary" value="${n ? 'Editar':'Cadastrar'}" />

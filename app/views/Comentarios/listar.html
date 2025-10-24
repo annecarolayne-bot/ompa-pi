@@ -17,6 +17,9 @@
       </header>
 
 <div class="container">   
+	#{if noticia.nomeAutor != noticia.autor.nome}
+	<p style="color:gray;">Editada pela última vez por ${noticia.autor.nome} em ${noticia.dataEdicao?.format("dd/MM/yyyy")}</p>	
+	#{/if}
 
 <p style="text-align: justify; ">${noticia.conteudo} </p>
 	
@@ -50,7 +53,7 @@
 			    <div class="flex-grow-1">
 			        <!-- Nome e data -->
 			        <div class="fw-bold">${c?.autor?.nome} 
-			            <span class="text-muted small">– ${c.data?.format("dd/MM/yyyy")}</span>
+			            <span class="text-muted small">– ${c?.data?.format("dd/MM/yyyy")}</span>
 			        </div>
 			
 					<!-- Texto do comentário -->

@@ -11,28 +11,38 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import play.data.validation.Required;
 import play.db.jpa.Model;
 
 @Entity
 public class Noticia extends Model{
 
+	@Required
 	public String titulo;
 	
-	public String autor;
-	public String senha;
+	public String nomeAutor;
 	
 	@Lob
 	@Column(columnDefinition = "TEXT")
+	@Required
 	public String conteudo;
 
 	@Temporal(TemporalType.DATE)
 	public Date dataPublicacao;
+
+	@Temporal(TemporalType.DATE)
+	public Date dataEdicao;
 	
 	@Enumerated(EnumType.STRING)
+	@Required
 	public Status status;
 	
 	@ManyToOne
+	@Required
 	public Assunto assunto;
+	
+	@ManyToOne
+	public Usuario autor;
 	
 	public String caminhoImagem;
 	
@@ -40,12 +50,6 @@ public class Noticia extends Model{
 		this.status = Status.ATIVO;
 	}
 	
-	public Noticia(String titulo, String conteudo, String autor) {
-		this.status = Status.ATIVO;
-		this.titulo = titulo;
-		this.conteudo = conteudo;
-		this.autor = autor;
-	}
 	
 	@Override
 	public String toString() {
