@@ -41,7 +41,7 @@ public class Noticias extends Controller{
 	    render(noticias, termo);
 	}
 	
-
+	@Administrador
 	public static void salvar(@Valid Noticia noticia, File imagemCapa) {
 		
 		if(validation.hasErrors()) {
@@ -75,7 +75,15 @@ public class Noticias extends Controller{
 			 }
 		 }
 		 
-		noticia.save();
+		 Noticia noticiaDuplicada = Noticia.find("titulo = ?1 and assunto.id = ?2 and conteudo = ?3", noticia.titulo, noticia.assunto.id, noticia.conteudo).first();
+		
+		if(noticiaDuplicada==null) {
+			noticia.save();
+			flash.success("Notícia cadastrada com sucesso!");
+		}else {
+			flash.error("Erro! Esta notícia já está cadastrada no sistema.");
+		}
+		 
 		listar(null);
 	}
 	
@@ -87,7 +95,7 @@ public class Noticias extends Controller{
 		listar(null);
 	}
 	
-	
+	@Administrador
 	public static void editar(Long id) {
 		Noticia n = Noticia.findById(id);
 		List<Assunto> assuntos = Assunto.findAll();
