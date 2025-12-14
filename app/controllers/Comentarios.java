@@ -99,6 +99,7 @@ public class Comentarios extends Controller {
 		renderTemplate("Comentarios/form.html", comentario, noticia);
 	}
 
+	//no botao de curtir faz action de curtir, renderJson com o novo valor de curtidas
 	public static void curtir(Long id) {
 	    Comentario c = Comentario.findById(id);
 	    if (c != null) {

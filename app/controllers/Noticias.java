@@ -26,7 +26,7 @@ public class Noticias extends Controller{
 		render(assuntos);
 	}
 	
-	public static void listar(String termo) {
+	public static void listarAjax(String termo) {
 	    List<Noticia> noticias = null;
 
 	    if (termo == null || termo.trim().isEmpty()) {
@@ -38,7 +38,11 @@ public class Noticias extends Controller{
 	        ).fetch();
 	    }
 	    
-	    render(noticias, termo);
+	    renderJSON(noticias);
+	}
+	
+	public static void listar() {
+		render();
 	}
 	
 	@Administrador
@@ -84,7 +88,7 @@ public class Noticias extends Controller{
 			flash.error("Erro! Esta notícia já está cadastrada no sistema.");
 		}
 		 
-		listar(null);
+		listar();
 	}
 	
 	@Administrador
@@ -92,7 +96,7 @@ public class Noticias extends Controller{
 		Noticia noticia = Noticia.findById(id);
 		noticia.status = Status.INATIVO;
 		noticia.save();
-		listar(null);
+		listar();
 	}
 	
 	@Administrador

@@ -32,145 +32,95 @@
 	
 	  								<br/>
 									
-									
+									<form class="d-flex mx-auto" id="buscarNoticias" role="search" action="@{Noticias.listar()}" style="max-width: 600px; width: 100%;">
+																						<input class="form-control me-2" type="search" name="termo" 
+																							placeholder="Buscar notícias por autor ou título" 
+																							value="${termo}">
+																						<button class="btn btn-outline-light" type="submit"  style="color: rgb(118, 227, 9);">Buscar</button>
+																						</form>
+																						
+				
+																						<!--Na linha com os registros você coloca no append-->
+																						
+																						
+																						
+																						<div class="container px-4 px-lg-5">
+																							              <div class="row gx-4 gx-lg-5 justify-content-center">
+																							                  <div class="col-md-10 col-lg-8 col-xl-7">
+																												
+																											
+																							                      <!-- Post preview-->
+																												  <div id="resultado">
+																													
+																												  </div>
+																												  
+																												  <script type="text/javascript">
+																												  $(document).ready(function () {
 
-	  <div class="container px-4 px-lg-5">
-	              <div class="row gx-4 gx-lg-5 justify-content-center">
-	                  <div class="col-md-10 col-lg-8 col-xl-7">
-						#{if noticias.isEmpty()}
-						    <p>Nenhuma notícia encontrada para "${termo}".</p>
-						#{/if}
-	                      <!-- Post preview-->
-						  #{list items: noticias, as:'n'}
-	                      <div class="post-preview">
-							
-							<!-- Botão de três pontinhos -->
-													  <div class="dropdown">
-													    <button class="btn btn-light" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-													      &#8942; <!-- Código para os três pontinhos verticais (⋮) -->
-													    </button>
+																												      function buscarNoticias() {
+																												          $.ajax({
+																												              type: "post",
+																												              url: "@{Noticias.listarAjax}",
+																												              data: $("#buscarNoticias").serialize(), // termo vazio = null
+																												              success: function (data) {
 
-													    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton" style="min-width: 250px;">
-													      <li><a class="dropdown-item" href="@{Noticias.editar(n.id)}">Editar</a></li>
-													      <li><a class="dropdown-item text-danger" href="@{Noticias.remover(n.id)}">Excluir</a></li>
-													      
-													    </ul>
-													  </div>
-	                          <a href="@{Comentarios.listar(n.id)}" style="color:#6a0dad">
-	                              <h2 class="post-title">${n.titulo}</h2>
-	                              <h3 class="post-subtitle">${n.conteudo.length() > 80 ? n.conteudo.substring(0, 80) + "..." : n.conteudo}</h3>
-	                          </a>
-							
-	                          <p class="post-meta">
-	                              Publicado por 
-	                              <a href="#">${n.nomeAutor}</a>
-	                              em ${n.dataPublicacao}
-	                          </p>
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-							  
-	                      </div>
-	                      <!-- Divider-->
-	                      <hr class="my-4" />
-						  #{/list}
-						  <!-- Pager-->
-						    <div class="d-flex justify-content-end mb-4"><a class="btn btn-outline-success text-uppercase" href="@{Noticias.form}">Cadastrar Nova Notícia →</a></div>
-						  </div>
-						 </div>
-						 </div>
-						 
-	  
-	  
+																												                  $("#resultado").empty();
 
+																												                  // ✅ Caso não exista nenhuma notícia
+																												                  if (!data || data.length === 0) {
+																												                      $("#resultado").html(
+																												                          '<p class="text-center text-muted mt-4">' +
+																												                          'Nenhuma notícia cadastrada no sistema.' +
+																												                          '</p>'
+																												                      );
+																												                      return;
+																												                  }
 
+																												                  $.each(data, function (i, item) {
 
+																												                      let conteudoResumo = item.conteudo.length > 80
+																												                          ? item.conteudo.substring(0, 80) + "..."
+																												                          : item.conteudo;
 
+																												                      let html =
+																												                          '<div class="post-preview position-relative">' +
+																												                              '<a href="/comentarios/listar?noticiaId=' + item.id + '" style="color:#6a0dad">' +
+																												                                  '<h2 class="post-title">' + item.titulo + '</h2>' +
+																												                                  '<h3 class="post-subtitle">' + conteudoResumo + '</h3>' +
+																												                              '</a>' +
+																												                              '<p class="post-meta">' +
+																												                                  'Publicado por <a href="#">' + item.nomeAutor + '</a> em ' + item.dataPublicacao +
+																												                              '</p>' +
+
+																												                              '<div class="position-absolute bottom-0 end-0 mb-2 me-2">' +
+																												                                  '<a href="/noticias/editar?id=' + item.id + '" class="btn btn-sm btn-outline-primary me-1">Editar</a>' +
+																												                                  '<a href="/noticias/remover?id=' + item.id + '" class="btn btn-sm btn-outline-danger" ' +
+																												                                     'onclick="return confirm(\'Deseja realmente excluir esta notícia?\')">Excluir</a>' +
+																												                              '</div>' +
+																												                          '</div>' +
+																												                          '<hr class="my-4" />';
+
+																												                      $("#resultado").append(html);
+																												                  });
+																												              }
+																												          });
+																												      }
+
+																												      // ✅ 1️⃣ carrega automaticamente ao abrir /noticias/listar
+																												      buscarNoticias();
+
+																												      // ✅ 2️⃣ continua funcionando ao buscar
+																												      $("#buscarNoticias").submit(function (e) {
+																												          e.preventDefault();
+																												          buscarNoticias();
+																												      });
+
+																												  });
+																												  </script>							 
+																																													
+																						<div class="d-flex justify-content-end mb-4"><a class="btn btn-outline-success text-uppercase" href="@{Noticias.form}">Cadastrar Nova Notícia →</a></div>
+																						
+																						</div>
+																						</div>
+																						</div>
+			
